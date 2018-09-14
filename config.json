@@ -1,0 +1,37 @@
+{
+  "description": "Secure bind (recursively read-only) volume driver",
+  "documentation": "https://github.com/AkihiroSuda/securebind-docker",
+  "entrypoint": [
+    "/driver"
+  ],
+  "network": {
+    "type": "none"
+  },
+  "interface": {
+    "types": [
+      "docker.volumedriver/1.0"
+    ],
+    "socket": "driver.sock"
+  },
+  "linux": {
+    "capabilities": [
+      "CAP_SYS_ADMIN"
+    ],
+    "devices": [
+      {
+        "path": "/dev/fuse"
+      }
+    ]
+  },
+  "mounts": [
+    {
+      "destination": "/mnt/root",
+      "options": [
+        "rbind"
+      ],
+      "source": "/",
+      "type": "bind"
+    }
+  ],
+  "propagatedmount": "/mnt/volumes"
+}
